@@ -23,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL1 = "ID";
     private static final String COL2 = "name";
     private static final String COL3 = "time";
+    private static final String COL4 = "score";
 
     public String getTime() {
         Date currentTime = Calendar.getInstance().getTime();
@@ -37,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + " (" + COL1 +" INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL2 +" TEXT, "+ COL3 +" TEXT)";
+                COL2 +" TEXT, "+ COL3 +" TEXT,"+ COL4 +" TEXT )";
         db.execSQL(createTable);
     }
 
@@ -47,11 +48,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addData(String item, String currentDateandTime) {
+    public boolean addData(String item, String currentDateandTime, String confidence) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2, item);
         contentValues.put(COL3, currentDateandTime);
+        contentValues.put(COL4, confidence);
         Log.d(TAG, "addData: Adding " + item + " to " + TABLE_NAME);
 
         long result = db.insert(TABLE_NAME, null, contentValues);

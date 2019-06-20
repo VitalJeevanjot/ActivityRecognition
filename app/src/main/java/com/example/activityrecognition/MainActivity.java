@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, ListDataActivity.class);
         startActivity(intent);
     }
-    public void AddData(String newEntry) {
+    public void AddData(String newEntry, String confidenceVal) {
         String currentDateandTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        boolean insertData = mDatabaseHelper.addData(newEntry, currentDateandTime);
+        boolean insertData = mDatabaseHelper.addData(newEntry, currentDateandTime, confidenceVal);
 
         if (insertData) {
             toastMessage("Data Successfully Inserted!");
@@ -100,48 +100,40 @@ public class MainActivity extends AppCompatActivity {
         switch (type) {
             case DetectedActivity.IN_VEHICLE: {
                 label = "In Vehicle";
-                AddData(label);
                 icon = R.drawable.ic_driving;
                 break;
             }
             case DetectedActivity.ON_BICYCLE: {
                 label = "On Bicycle";
-                AddData(label);
                 icon = R.drawable.ic_on_bicycle;
                 break;
             }
             case DetectedActivity.ON_FOOT: {
                 label = "On Foot";
-                AddData(label);
                 icon = R.drawable.ic_walking;
                 break;
             }
             case DetectedActivity.RUNNING: {
                 label = "Running";
-                AddData(label);
                 icon = R.drawable.ic_running;
                 break;
             }
             case DetectedActivity.STILL: {
                 label = "STill";
-                AddData(label);
                 break;
             }
             case DetectedActivity.TILTING: {
                 label = "Tilting";
-                AddData(label);
                 icon = R.drawable.ic_tilting;
                 break;
             }
             case DetectedActivity.WALKING: {
                 label = "Walking";
-                AddData(label);
                 icon = R.drawable.ic_walking;
                 break;
             }
             case DetectedActivity.UNKNOWN: {
                 label = "Unknown Activity";
-                AddData(label);
                 break;
             }
         }
@@ -150,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (confidence > Constants.CONFIDENCE) {
             txtActivity.setText(label);
+            String conf = Integer.toString(confidence);
+            AddData(label, conf);
             txtConfidence.setText("Confidence: " + confidence);
             imgActivity.setImageResource(icon);
         }

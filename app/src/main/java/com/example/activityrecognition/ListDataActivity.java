@@ -60,7 +60,7 @@ public class ListDataActivity extends AppCompatActivity {
         while(data.moveToNext()){
             //get the value from the database in column 1
             //then add it to the ArrayList
-            listData.put(data.getInt(0),data.getString(1)+"\n"+ data.getString(2));
+            listData.put(data.getInt(0),data.getString(1)+" ("+data.getString(3)+")"+"\n"+ data.getString(2));
         }
         // Log.d(TAG, listData.toString());
         //create the list adapter and set the adapter
