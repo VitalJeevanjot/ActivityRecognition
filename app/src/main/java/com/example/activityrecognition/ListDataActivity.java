@@ -64,14 +64,14 @@ public class ListDataActivity extends AppCompatActivity {
         }
         // Log.d(TAG, listData.toString());
         //create the list adapter and set the adapter
-        List<Map<String, String>> listItems = new ArrayList<>();
+        List<TreeMap<String, String>> listItems = new ArrayList<>();
         SimpleAdapter adapter = new SimpleAdapter(this, listItems, R.layout.list_item,
                 new String[]{"First Line", "Second Line"},
                 new int[]{R.id.text1, R.id.text2});
          Iterator it = listData.entrySet().iterator();
         while (it.hasNext())
         {
-            Map<String, String> resultsMap = new TreeMap<>();
+            TreeMap<String, String> resultsMap = new TreeMap<>();
             Map.Entry pair = (Map.Entry)it.next();
             resultsMap.put("First Line", pair.getKey().toString());
             resultsMap.put("Second Line", pair.getValue().toString());
