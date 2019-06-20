@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.util.Calendar;
 import java.util.ArrayList;
+import java.util.*;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import android.widget.SimpleAdapter;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 /**
@@ -53,22 +55,23 @@ public class ListDataActivity extends AppCompatActivity {
         //get the data and append to a list
         Cursor data = mDatabaseHelper.getData();
         // Log.d(TAG, data.toString());
-        HashMap<String, String> listData = new HashMap<>();
+        TreeMap<String, String> listData = new TreeMap<>(Collections.reverseOrder());
         // ArrayList<String> listData = new ArrayList<>();
         while(data.moveToNext()){
             //get the value from the database in column 1
             //then add it to the ArrayList
-            listData.put(data.getString(1), data.getString(2));
+            listData.put(data.getString(0)+" "+data.getString(1), data.getString(2));
         }
+        // Log.d(TAG, listData.toString());
         //create the list adapter and set the adapter
-        List<HashMap<String, String>> listItems = new ArrayList<>();
+        List<Map<String, String>> listItems = new ArrayList<>();
         SimpleAdapter adapter = new SimpleAdapter(this, listItems, R.layout.list_item,
                 new String[]{"First Line", "Second Line"},
                 new int[]{R.id.text1, R.id.text2});
-        Iterator it = listData.entrySet().iterator();
+         Iterator it = listData.entrySet().iterator();
         while (it.hasNext())
         {
-            HashMap<String, String> resultsMap = new HashMap<>();
+            Map<String, String> resultsMap = new TreeMap<>();
             Map.Entry pair = (Map.Entry)it.next();
             resultsMap.put("First Line", pair.getKey().toString());
             resultsMap.put("Second Line", pair.getValue().toString());
